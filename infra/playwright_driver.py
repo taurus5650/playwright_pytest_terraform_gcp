@@ -14,6 +14,14 @@ class PlaywrightDriver:
         self.context = self.browser.new_context()
         self.page = self.context.new_page()
 
+    def screenshot(self, path: str = None):
+        if path is None:
+            timestamp = int(time.time())
+            path = f'screenshot/{timestamp}.png'
+        os.makedirs('screenshot', exist_ok=True)
+        self.page.screenshot(path=path)
+        logger.info(f'screenshot={path}')
+
     def _handle_exception_screenshot(self, action: str, exception: str):
         logger.error(f'{action} failed: {exception}')
         self.screenshot()
