@@ -34,9 +34,12 @@ class PlaywrightDriver:
         except Exception as e:
             self._handle_exception_screenshot(action='goto', exception={e})
 
-    def click(self, selector: str, timeout: int = self.TIMEOUT):
+    def click(self, selector: str, timeout: int = None):
         logger.info(f'click={selector}')
         try:
+            if timeout is None:
+                timeout = self.TIMEOUT
+
             self.page.locator(selector=selector).click(timeout=timeout)
         except Exception as e:
             self._handle_exception_screenshot(action='click', exception={e})
