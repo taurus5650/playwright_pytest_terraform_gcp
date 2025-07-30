@@ -40,3 +40,15 @@ class PlaywrightDriver:
             self.page.locator(selector=selector).click(timeout=timeout)
         except Exception as e:
             self._handle_exception_screenshot(action='click', exception={e})
+
+    def fill(self, selector: str, value: str):
+        logger.info(f'fill={selector}')
+        try:
+            self.page.fill(selector=selector, value=value)
+        except Exception as e:
+            self._handle_exception_screenshot(action='fill', exception={e})
+
+    def close_driver(self):
+        self.context.close()
+        self.browser.close()
+        self.playwright.stop()
