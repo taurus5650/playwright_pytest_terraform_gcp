@@ -18,6 +18,6 @@ class TestCase:
     def teardown_method(self):
         self.driver.close_driver()
 
-    @allure.title('New Register User')
+    @allure.story('New Register User')
     def test_new_register_user(self):
         self.home.click_signup_login_href()
