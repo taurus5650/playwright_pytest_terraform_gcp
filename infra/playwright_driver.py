@@ -1,5 +1,5 @@
 from playwright.sync_api import sync_playwright, Page, Browser, BrowserContext, TimeoutError
-from utils.logger import Logger
+from utils.logger import logger
 import os
 import time
 
@@ -20,22 +20,22 @@ class PlaywrightDriver:
             path = f'screenshot/{timestamp}.png'
         os.makedirs('screenshot', exist_ok=True)
         self.page.screenshot(path=path)
-        self.logger.info(f'screenshot={path}')
+        logger.info(f'screenshot={path}')
 
     def _handle_exception_screenshot(self, action: str, exception: str):
-        self.logger.error(f'{action} failed: {exception}')
+        logger.error(f'{action} failed: {exception}')
         self.screenshot()
         raise exception
 
     def goto(self, url: str):
-        self.logger.info(f'goto={url}')
+        logger.info(f'goto={url}')
         try:
             self.page.goto(url=url)
         except Exception as e:
             self._handle_exception_screenshot(action='goto', exception={e})
 
     def click(self, selector: str, timeout: int = None):
-        self.logger.info(f'click={selector}')
+        logger.info(f'click={selector}')
         try:
             if timeout is None:
                 timeout = self.TIMEOUT
@@ -45,7 +45,7 @@ class PlaywrightDriver:
             self._handle_exception_screenshot(action='click', exception={e})
 
     def fill(self, selector: str, value: str):
-        self.logger.info(f'fill={selector}')
+        logger.info(f'fill={selector}')
         try:
             self.page.fill(selector=selector, value=value)
         except Exception as e:
