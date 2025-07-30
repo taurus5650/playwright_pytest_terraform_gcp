@@ -16,7 +16,7 @@ class TestCase:
         self.home = HomePage(driver=self.driver)
 
     def teardown_method(self):
-        self.driver.close()
+        self.driver.close_driver()
 
     @allure.title('New Register User')
     def test_new_register_user(self):

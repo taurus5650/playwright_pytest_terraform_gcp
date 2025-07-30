@@ -6,6 +6,7 @@ class HomePage:
 
     def __init__(self, driver: PlaywrightDriver):
         self.driver = driver
+        self.locator = Locator()
 
     def click_signup_login_href(self):
         self.driver.goto(url=self.locator.ENTER_HOMPAGE_URL)
