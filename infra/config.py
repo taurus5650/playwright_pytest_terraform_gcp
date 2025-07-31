@@ -12,7 +12,7 @@ class EnvConfig:
         self.parser = parser
 
     def get(self, section: str, key: str) -> str:
-        """Example: get("HOME", "WEB_BASE_URL")"""
+        """Example: get('HOMEPAGE', 'WEB_BASE_URL')"""
         return self.parser[section][key]
 
 
