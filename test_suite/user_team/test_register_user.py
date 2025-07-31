@@ -1,8 +1,8 @@
 import allure
 
 from infra.playwright_driver import PlaywrightDriver
-from page.home_page.home_page import HomePage
-from page.login_page.login_page import LoginPage
+from page.home_page.page import HomePage
+from page.login_page.page import LoginPage
 
 
 class TestCase:
