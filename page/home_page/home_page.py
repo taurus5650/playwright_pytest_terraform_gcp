@@ -9,7 +9,7 @@ class HomePage:
         self.locator = Locator()
 
     def go_to_hompage(self):
-        return self.driver.goto(url=self.locator.ENTER_HOMPAGE_URL)
+        return self.driver.goto(url=self.locator.WEB_BASE_URL)
 
     def click_signup_login_href(self):
         return self.driver.click(selector=self.locator.SIGN_IN_OR_SIGN_UP_HYPERLINK)
