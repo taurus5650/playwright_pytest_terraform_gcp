@@ -1,10 +1,9 @@
 import logging
+import os
+import re
 import sys
 import uuid
-import os
 from datetime import datetime, timedelta
-import re
-
 
 # ===== 1. Setup Logger  =====
 logger = logging.getLogger(name='')  # root logger
@@ -23,7 +22,7 @@ console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 
 # ===== 3. File handler (log/yyyy-mm-dd_HHMMSS.log) =====
-log_dir = "test_suite/log"
+log_dir = "./log"
 os.makedirs(log_dir, exist_ok=True)
 
 timestamp = datetime.now().strftime('%Y-%m-%d_%H%M%S')

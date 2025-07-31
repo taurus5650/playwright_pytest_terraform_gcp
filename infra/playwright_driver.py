@@ -31,8 +31,9 @@ class PlaywrightDriver:
         logger.info(f'goto={url}')
         try:
             self.page.goto(url=url)
+            return self.page
         except Exception as e:
-            self._handle_exception_screenshot(action='goto', exception={e})
+            self._handle_exception_screenshot(action='goto', exception=e)
 
     def click(self, selector: str, timeout: int = None):
         logger.info(f'click={selector}')
@@ -42,14 +43,25 @@ class PlaywrightDriver:
 
             self.page.locator(selector=selector).click(timeout=timeout)
         except Exception as e:
-            self._handle_exception_screenshot(action='click', exception={e})
+            self._handle_exception_screenshot(action='click', exception=e)
 
     def fill(self, selector: str, value: str):
         logger.info(f'fill={selector}')
         try:
             self.page.fill(selector=selector, value=value)
         except Exception as e:
-            self._handle_exception_screenshot(action='fill', exception={e})
+            self._handle_exception_screenshot(action='fill', exception=e)
+
+    def inner_text(self, selector: str, timeout: int = None) -> str:
+        logger.info(f'inner_text={selector}')
+        try:
+            if timeout is None:
+                timeout = self.TIMEOUT
+            locator = self.page.locator(selector=selector)
+            locator.wait_for(state='visible', timeout=timeout) # Visible = Waiting CSS done (display != None, opcity != 0)
+            return locator.inner_text() # Page's text, including child node
+        except Exception as e:
+            self._handle_exception_screenshot(action='inner_text', exception=e)
 
     def close_driver(self):
         self.context.close()
