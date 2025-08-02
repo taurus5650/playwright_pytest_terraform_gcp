@@ -7,6 +7,9 @@ services:
       dockerfile: deployment/Dockerfile
     volumes:
       - ../:/app
+      - ../config/test.ini:/automation_ui_playwright_pytest/config/test.ini
+      - ../config/uat.ini:/automation_ui_playwright_pytest/config/uat.ini
+      - ../config/prod.ini:/automation_ui_playwright_pytest/config/prod.ini
     command: tail -f /dev/null
     environment:
       - ENV=prod

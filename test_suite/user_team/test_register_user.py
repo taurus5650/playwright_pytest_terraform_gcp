@@ -6,6 +6,7 @@ from infra.playwright_driver import PlaywrightDriver
 from page.home_page.page import HomePage
 from page.login_page.page import LoginPage
 from page.signup_page.page import SignupPage
+from infra.config import env_config
 
 
 class TestCase:
@@ -15,6 +16,7 @@ class TestCase:
         self.home = HomePage(driver=self.driver)
         self.login = LoginPage(driver=self.driver)
         self.signup = SignupPage(driver=self.driver)
+        self.homepage_url = env_config.get('HOMEPAGE', 'WEB_BASE_URL')
 
     def teardown_method(self):
         self.driver.close_driver()
@@ -37,7 +39,7 @@ class TestCase:
         expected_account_created_text = 'ACCOUNT CREATED!'
 
         # region __Step1. Navigate to url
-        actual_homepage_title = self.home.go_to_hompage()
+        actual_homepage_title = self.home.go_to_hompage(url=self.homepage_url)
         # endregion __Step1. Navigate to url
 
         # region __Step2. Verify that home page is visible successfully
