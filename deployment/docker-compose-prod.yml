@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: deployment/Dockerfile
+    volumes:
+      - ../:/app
+    command: tail -f /dev/null
+    environment:
+      - ENV=prod
+    ports:
+      - '9170:9170'
