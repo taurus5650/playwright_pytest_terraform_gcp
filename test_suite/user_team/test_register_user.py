@@ -5,6 +5,7 @@ import allure
 from infra.playwright_driver import PlaywrightDriver
 from page.home_page.page import HomePage
 from page.login_page.page import LoginPage
+from page.signup_page.page import SignupPage
 
 
 class TestCase:
@@ -13,6 +14,7 @@ class TestCase:
         self.driver = PlaywrightDriver(headless=True)
         self.home = HomePage(driver=self.driver)
         self.login = LoginPage(driver=self.driver)
+        self.signup = SignupPage(driver=self.driver)
 
     def teardown_method(self):
         self.driver.close_driver()
@@ -23,8 +25,8 @@ class TestCase:
         for_loop_max = 180
         expected_homepage_title = 'Automation Exercise'
         expected_sign_up_form_text = 'New User Signup!'
-        name = f'automation_{current_time.strftime(' % Y % m % d % H % M % S % f')}'
-        sign_up_email = f'{current_time.strftime(' % Y % m % d % H % M % S % f')}@automation.com'
+        name = f'automation_{current_time.strftime("%Y%m%d%H%M%S")}'
+        sign_up_email = f'{current_time.strftime("%Y%m%d%H%M%S")}@automation.com'
         expected_enter_account_info_text = 'ENTER ACCOUNT INFORMATION'
         password = '1234567890'
         address = '24th Floor, Dr. S.P.M. Civic Centre, Minto Road, New Delhi, India.'
@@ -60,4 +62,7 @@ class TestCase:
         self.login.click_sign_up_btn()
         # endregion __Step6. Click 'Signup' button
 
-
+        # region __Step7. Verify that 'ENTER ACCOUNT INFORMATION' is visible
+        actual_enter_account_info = self.signup.inner_text_enter_account_info()
+        assert actual_enter_account_info == expected_enter_account_info_text
+        # endregion __Step7. Verify that 'ENTER ACCOUNT INFORMATION' is visible
