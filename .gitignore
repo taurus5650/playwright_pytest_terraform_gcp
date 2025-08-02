@@ -151,6 +151,7 @@ env.bak/
 venv.bak/
 .idea
 .DS_Store
+__pycache__
 
 
 # Spyder project settings
