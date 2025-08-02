@@ -16,3 +16,6 @@ class LoginPage:
 
     def fill_sign_up_email(self, value: str):
         return self.driver.fill(selector=self.locator.SIGN_UP_EMAIL, value=value)
+
+    def click_sign_up_btn(self):
+        return self.driver.click(selector=self.locator.SIGN_UP_BTN)

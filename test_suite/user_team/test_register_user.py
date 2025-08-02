@@ -55,3 +55,9 @@ class TestCase:
         self.login.fill_sign_up_name(value=name)
         self.login.fill_sign_up_email(value=sign_up_email)
         # endregion __Step5. Enter name and email address
+
+        # region __Step6. Click 'Signup' button
+        self.login.click_sign_up_btn()
+        # endregion __Step6. Click 'Signup' button
+
+
