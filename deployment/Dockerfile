@@ -1,26 +1,28 @@
 FROM python:3.13-slim
 
-# Set timezone
-RUN apt update && apt install -y tzdata && \
-    ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
-    echo "Asia/Taipei" > /etc/timezone
+# Set environment variables
+ENV TZ=Asia/Taipei
+ENV PYTHONUNBUFFERED=1
 
-# Install browser deps
-RUN apt install -y wget gnupg ca-certificates && \
-    apt install -y libnss3 libatk-bridge2.0-0 libxss1 libasound2 libx11-xcb1 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libgtk-3-0
+# Install system & browser dependencies
+RUN apt update && apt install -y \
+    tzdata wget gnupg ca-certificates \
+    libnss3 libatk-bridge2.0-0 libxss1 libasound2 \
+    libx11-xcb1 libxcomposite1 libxdamage1 libxrandr2 \
+    libgbm1 libgtk-3-0 && \
+    apt clean && rm -rf /var/lib/apt/lists/*
 
-# Set workdir
+# Set working directory
 WORKDIR /app
 
-# Install poetry and deps
+# Install Poetry & dependencies
 COPY pyproject.toml poetry.lock ./
-RUN pip install poetry && poetry config virtualenvs.create false && poetry install --no-root
+RUN pip install poetry && \
+    poetry config virtualenvs.create false && \
+    poetry install --no-root
 
-# Copy source
+# Copy source code
 COPY . .
 
-# Install Playwright browser
+# Install Playwright browsers (chromium only)
 RUN poetry run playwright install chromium
-
-## Container will keep running for inspection
-#CMD ['tail', '-f', '/dev/null']
