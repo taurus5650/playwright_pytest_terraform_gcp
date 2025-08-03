@@ -1,3 +1,6 @@
+#Terraform
+terraform-ci.json
+
 # ScreenShot
 screenshot
 
@@ -142,6 +145,7 @@ celerybeat.pid
 
 # Environments
 .env
+.evn.gcp
 .envrc
 .venv
 env/
