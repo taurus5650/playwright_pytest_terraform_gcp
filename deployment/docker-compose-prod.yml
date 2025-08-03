@@ -2,11 +2,13 @@ version: '3.8'
 
 services:
   app:
+    container_name: playwright-prod-container
+    image: playwright-prod-image
     build:
       context: ..
       dockerfile: deployment/Dockerfile
     volumes:
-      - ../:/app
+      - ../:/app # hot reload, no need restart docker if only .py changed
     command: tail -f /dev/null
     ports:
       - '9170:9170'
