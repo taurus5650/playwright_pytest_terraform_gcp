@@ -14,27 +14,28 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-  steps:
-    - name: checkout-repository
-      uses: actions/checkout@v4
 
-    - name: set-up-gcp-sdk
-      uses: google-github-actions/setup-gcloud@v2
-      with:
-        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        export_default_credentials: true
+    steps:
+      - name: checkout-repository
+        uses: actions/checkout@v4
 
-    - name: configures-docker-to-use-gcp-artifact-registry
-      run: gcloud auth configure-docker ${REGION}-docker.pkg.dev
+      - name: set-up-gcp-sdk
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          export_default_credentials: true
 
-    - name: build-and-push-docker-image-to-artifact-registry
-      run: make run-prod-docker
+      - name: configures-docker-to-use-gcp-artifact-registry
+        run: gcloud auth configure-docker ${REGION}-docker.pkg.dev
 
-    - name: setup-terraform
-      uses: hashicorp/setup-terraform@v3
+      - name: build-and-push-docker-image-to-artifact-registry
+        run: make run-prod-docker
 
-    - name: terraform-init-and-apply
-      run: |
-        make terraform-init
-        make terraform-apply
+      - name: setup-terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: terraform-init-and-apply
+        run: |
+          make terraform-init
+          make terraform-apply
