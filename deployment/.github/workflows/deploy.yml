@@ -8,12 +8,12 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: ${{ secrets.GCP_REGION }}
-  SEVICE_NAME: automation-ui-playwright-pytest
+  SERVICE_NAME: automation-ui-playwright-pytest
   IMAGE_NAME: app-repo/playwright-prod-image
 
-job:
+jobs:
   deploy:
-    runs-on: ubuntu-lates
+    runs-on: ubuntu-latest
 
   steps:
     - name: checkout-repository
