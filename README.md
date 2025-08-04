@@ -39,3 +39,8 @@ GCP_REGION：建議 asia-east1（台灣最近的區域）
 是 Action 的 env 還是 repo secrest
 ```
 ![gihub_action_value.png](readme/gihub_action_value.png)
+
+
+Enable Artifact Registry API
+https://console.cloud.google.com/apis/library/artifactregistry.googleapis.com?inv=1&invt=Ab4lPw&authuser=2&project=playwright-pytest&flow=gcp
+![google_artifact_registry_enable.png](readme/google_artifact_registry_enable.png)
