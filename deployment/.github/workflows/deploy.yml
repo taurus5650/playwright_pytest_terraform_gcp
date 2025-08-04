@@ -22,7 +22,7 @@ job:
     - name: set-up-gcp-sdk
       uses: google-github-actions/setup-gcloud@v2
       with:
-        service_account_key: ${{secrests.GCP_CREDENTIALS}}
+        service_account_key: ${{ secrests.GCP_CREDENTIALS }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
 
