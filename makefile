@@ -1,6 +1,9 @@
 DEPLOYMENT = deployment/
+TF_DIR = $(DEPLOYMENT)/terraform
 DOCKER_DEV = docker-compose-dev.yml
 IMAGE_DEV = playwright-dev-image
+IMAGE_NAME = playwright-prod-image
+GCP_IMAGE = asia-east1-docker.pkg.dev/$(PROJECT_ID)/app-repo/$(IMAGE_NAME)
 
 
 install-playwright-chromium:
@@ -14,3 +17,16 @@ run-dev-docker:
 	docker compose -f $(DEPLOYMENT)$(DOCKER_DEV) up --build
 	docker ps
 	# pytest --env=test -s -v
+
+run-prod-docker:
+	docker build -t $(GCP_IMAGE):latest -f $(DEPLOYMENT)/Dockerfile .
+	docker push $(GCP_IMAGE):latest
+
+terraform-init:
+	cd $(TF_DIR) && terraform init
+
+terraform-apply:
+	cd $(TF_DIR) && terraform apply -auto-approve \
+		-var="project_id=$(PROJECT_ID)" \
+		-var="region=$(REGION)" \
+		-var="image=$(IMAGE)"
