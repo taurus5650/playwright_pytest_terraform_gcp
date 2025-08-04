@@ -14,7 +14,6 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
   steps:
     - name: checkout-repository
       uses: actions/checkout@v4
@@ -22,7 +21,7 @@ jobs:
     - name: set-up-gcp-sdk
       uses: google-github-actions/setup-gcloud@v2
       with:
-        service_account_key: ${{ secrests.GCP_CREDENTIALS }}
+        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
 
@@ -30,8 +29,7 @@ jobs:
       run: gcloud auth configure-docker ${REGION}-docker.pkg.dev
 
     - name: build-and-push-docker-image-to-artifact-registry
-      run:
-        make run-prod-docker
+      run: make run-prod-docker
 
     - name: setup-terraform
       uses: hashicorp/setup-terraform@v3
