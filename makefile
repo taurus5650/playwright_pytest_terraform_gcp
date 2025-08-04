@@ -30,3 +30,9 @@ terraform-apply:
 		-var="project_id=$(PROJECT_ID)" \
 		-var="region=$(REGION)" \
 		-var="image=$(IMAGE)"
+
+terraform-destroy:
+    cd $(TF_DIR) && terraform destroy -auto-approve \
+      -var="project_id=$(PROJECT_ID)" \
+      -var="region=$(REGION)" \
+      -var="image=$(GCP_IMAGE):latest"
