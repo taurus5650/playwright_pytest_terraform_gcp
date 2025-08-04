@@ -4,7 +4,6 @@ on:
   push:
     branches: [master]
 
-
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REGION: ${{ secrets.GCP_REGION }}
@@ -26,11 +25,13 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           export_default_credentials: true
 
-      - name: configures-docker-to-use-gcp-artifact-registry
-        run: gcloud auth configure-docker ${REGION}-docker.pkg.dev
+      - name: configure-docker-for-gcp
+        run: |
+          gcloud auth configure-docker ${REGION}-docker.pkg.dev
 
-      - name: build-and-push-docker-image-to-artifact-registry
-        run: make run-prod-docker
+      - name: build-and-push-image
+        run: |
+          make docker-build-prod
 
       - name: setup-terraform
         uses: hashicorp/setup-terraform@v3
