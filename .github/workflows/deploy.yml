@@ -18,12 +18,16 @@ jobs:
       - name: checkout-repository
         uses: actions/checkout@v4
 
-      - name: set-up-gcp-sdk
+      - name: autenthicate-to-gcp
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: setup-gcloud
         uses: google-github-actions/setup-gcloud@v2
         with:
-          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          export_default_credentials: true
+          install_components: 'beta'
 
       - name: configure-docker-for-gcp
         run: |

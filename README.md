@@ -44,3 +44,9 @@ GCP_REGION：建議 asia-east1（台灣最近的區域）
 Enable Artifact Registry API
 https://console.cloud.google.com/apis/library/artifactregistry.googleapis.com?inv=1&invt=Ab4lPw&authuser=2&project=playwright-pytest&flow=gcp
 ![google_artifact_registry_enable.png](readme/google_artifact_registry_enable.png)
+
+```
+gcloud auth login
+gcloud auth configure-docker asia-east1-docker.pkg.dev
+make docker-build-prod
+```
