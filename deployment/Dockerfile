@@ -1,10 +1,8 @@
 FROM python:3.13-slim
 
-# Set environment variables
 ENV TZ=Asia/Taipei
 ENV PYTHONUNBUFFERED=1
 
-# Install system & browser dependencies
 RUN apt update && apt install -y \
     tzdata wget gnupg ca-certificates \
     libnss3 libatk-bridge2.0-0 libxss1 libasound2 \
@@ -12,20 +10,21 @@ RUN apt update && apt install -y \
     libgbm1 libgtk-3-0 && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /playwright-app
 
-# Install Poetry & dependencies
+# ----- Step 1: Copy only requirements for faster cache -----
 COPY pyproject.toml poetry.lock ./
+
+# ----- Step 2: Install poetry + dependencies -----
 RUN pip install poetry && \
     poetry config virtualenvs.create false && \
     poetry install --no-root
 
-# Copy source code
-COPY . .
-
-# Install Playwright browsers (chromium only)
+# ----- Step 3: Install playwright browser -----
 RUN poetry run playwright install chromium
+
+# ----- Step 4: Copy all source code -----
+COPY . .
 
 EXPOSE 9801
 

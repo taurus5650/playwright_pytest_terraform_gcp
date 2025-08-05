@@ -1,6 +1,12 @@
-from flask import Flask, jsonify, request
 import subprocess
+from flask import Flask, jsonify, request
+from collections import OrderedDict
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from utils.logger import logger
+
 
 app = Flask(__name__)
 BASE_TEST_DIR = 'test_suite'
@@ -12,7 +18,6 @@ def automation_ui():
         req_data = request.get_json(silent=True) or {}
         test_path = req_data.get('path', '')
 
-
         full_path = os.path.join(BASE_TEST_DIR, test_path)
         logger.info(f'flask path={full_path}')
 
@@ -23,24 +28,24 @@ def automation_ui():
             timeout=1800
         )
         output = input.stdout.decode()
-        result = {
-            "status": "success" if input.returncode == 0 else "failed",
-            "result": output
-        }
+        result = OrderedDict([
+            ("status", "success" if input.returncode == 0 else "failed"),
+            ("result", output)
+        ])
         return jsonify(result)
     except subprocess.TimeoutExpired as e:
         logger.error(f'flask eeror: {e}')
-        result = {
-            "status": "timeout",
-            "result": "na"
-        }
+        result = OrderedDict([
+            ("status", "error"),
+            ("result", f"{e}")
+        ])
         return jsonify(result)
     except Exception as e:
         logger.error(f'flask error: {e}')
-        {
-            "status": "error",
-            "result": f"{e}"
-        }
+        result = OrderedDict([
+            ("status", "error"),
+            ("result", f"{e}")
+        ])
         return jsonify(result)
 
 
