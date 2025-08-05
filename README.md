@@ -4,7 +4,9 @@
 
 Generate GCP Key
 ```aiexclude
+playwright-pytest-gcp-2508
 # 設定環境變數
+
 export PROJECT_ID=[YOUR_PROJECT_ID]
 export ACCOUNT_NAME=terraform-ci
 

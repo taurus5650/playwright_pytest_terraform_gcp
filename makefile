@@ -22,8 +22,8 @@ run-dev-docker:
 
 docker-push:
 	gcloud auth configure-docker asia-east1-docker.pkg.dev
-	docker build -t asia-east1-docker.pkg.dev/playwright-pytest/playwright-repo/playwright-image:latest .
-	docker push asia-east1-docker.pkg.dev/playwright-pytest/playwright-repo/playwright-image:latest
+	docker build -t asia-east1-docker.pkg.dev/playwright-pytest-gcp-2508/playwright-repo/playwright-image:latest .
+	docker push asia-east1-docker
 
 terraform-init:
 	cd $(TF_DIR) && terraform init

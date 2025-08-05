@@ -1,0 +1,54 @@
+name: CI - Lint, Test, Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test-lint-build:
+    runs-on: ubuntu-latest
+
+    env:
+      POETRY_VIRTUALENVS_CREATE: false
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install Poetry
+        run: |
+          pip install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry install
+          poetry run playwright install chromium
+
+      - name: Run Lint
+        run: |
+          poetry run flake8 .
+
+      - name: Run Tests
+        run: |
+          pytest --env=test -s -v
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Auth Docker to Artifact Registry
+        run: |
+          gcloud auth configure-docker asia-east1-docker.pkg.dev
+
+      - name: Build & Push Docker Image
+        run: make docker-push
