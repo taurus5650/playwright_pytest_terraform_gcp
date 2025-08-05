@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry install
+          poetry install --no-root
           poetry run playwright install chromium
 
       - name: Run Lint
