@@ -1,6 +1,7 @@
 provider "google" {
   project = var.project_id
   region  = var.region
+  credentials = file(var.gcp_credentials_file)
 }
 
 resource "google_artifact_registry_repository" "docker_repo" {
