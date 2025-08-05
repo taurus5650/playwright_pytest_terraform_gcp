@@ -16,14 +16,14 @@ run-dev-docker:
 	# pytest --env=test -s -v
 
 install-poetry:
-    pip install poetry
+	pip install poetry
 
 install-playwright-chromium:
 	poetry install --no-root
 	poetry run playwright install chromium
 
 gcloud-auth-docker-to-artifact-registry:
-    gcloud auth configure-docker asia-east1-docker.pkg.dev
+	gcloud auth configure-docker asia-east1-docker.pkg.dev
 
 docker-push:
 	gcloud auth configure-docker asia-east1-docker.pkg.dev

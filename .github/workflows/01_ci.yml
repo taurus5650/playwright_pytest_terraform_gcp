@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  test-lint-build:
+  test-and-build:
     runs-on: ubuntu-latest
 
     env:
@@ -19,7 +19,7 @@ jobs:
       - name: setup-python-for-ut
         uses: actions/setup-python@v4
         with:
-          python-version: "3.13"
+          python-version: '3.13'
 
       - name: install poetry
         run: make install-poetry
