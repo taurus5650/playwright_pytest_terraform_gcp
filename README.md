@@ -58,3 +58,6 @@ make docker-build-prod
 ![google_artifact_registry_set_value.png](readme/google_artifact_registry_set_value.png)
 ![google_artifact_registry_final_value.png](readme/google_artifact_registry_final_value.png)
 asia-east1-docker.pkg.dev/playwright-pytest-gcp-2508/playwright-repo
+
+enable permission
+![google_cloud_run_admin.png](readme/google_cloud_run_admin.png)
