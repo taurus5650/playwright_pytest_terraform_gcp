@@ -33,5 +33,12 @@ docker-push:
 terraform-init:
 	cd $(TF_DIR) && terraform init
 
+terraform-import-existing:
+	cd $(TF_DIR) && terraform import google_artifact_registry_repository.docker_repo asia-east1/playwright-repo || true
+	cd $(TF_DIR) && terraform import google_cloud_run_service.service asia-east1/automation-ui-service || true
+
+terraform-plan:
+	cd $(TF_DIR) && terraform plan -out=tfplan
+
 terraform-apply:
 	cd $(TF_DIR) && terraform apply -auto-approve

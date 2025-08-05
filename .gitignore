@@ -1,5 +1,12 @@
 #Terraform
 terraform-ci.json
+deployment/terraform/.terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+crash.log
+terraform.tfvars
+.tfplan
 
 # ScreenShot
 screenshot

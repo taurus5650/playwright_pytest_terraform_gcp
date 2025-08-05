@@ -32,5 +32,11 @@ jobs:
       - name: terraform-init
         run: make terraform-init
 
+      - name: terraform-import-existing
+        run: make terraform-import-existing
+
+      - name: terraform-plan
+        run: make terraform-plan
+
       - name: terraform-apply
         run: make terraform-apply
