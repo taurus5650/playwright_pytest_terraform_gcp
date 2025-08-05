@@ -11,3 +11,5 @@ services:
       - ../:/playwright-app # hot reload, no need restart docker if only .py changed
     ports:
       - '9801:9801'
+    environment:
+      - FLASK_DEBUG=true

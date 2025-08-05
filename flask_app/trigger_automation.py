@@ -38,33 +38,34 @@ def automation_ui():
         )
         output = input.stdout.decode()
 
-        print("\n========== Pytest Output Start ==========")
+        print('\n========== Pytest Output Start ==========')
         for line in output.strip().split('\n'):
-            print(f"[pytest] {line}")
-        print("========== Pytest Output End ==========\n")
+            print(f'[pytest] {line}')
+        print('========== Pytest Output End ==========\n')
 
         result = OrderedDict([
-            ("status", "success" if input.returncode == 0 else "failed"),
-            ("env", env_value),
-            ("path", full_path),
-            ("result", output),
+            ('status', 'success' if input.returncode == 0 else 'failed'),
+            ('env', env_value),
+            ('path', full_path),
+            ('result', f'{output}'),
         ])
         return Response(json.dumps(result), mimetype='application/json')
     except subprocess.TimeoutExpired as e:
         logger.error(f'flask eeror: {e}')
         result = OrderedDict([
-            ("status", "error"),
-            ("result", f"{e}")
+            ('status', 'error'),
+            ('result', f'{e}')
         ])
         return Response(json.dumps(result), mimetype='application/json')
     except Exception as e:
         logger.error(f'flask error: {e}')
         result = OrderedDict([
-            ("status", "error"),
-            ("result", f"{e}")
+            ('status', 'error'),
+            ('result', f'{e}')
         ])
         return Response(json.dumps(result), mimetype='application/json')
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 9801)), debug=True)
+    debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 9801)), debug=debug_mode)
