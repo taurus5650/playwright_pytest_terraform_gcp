@@ -4,7 +4,8 @@
 
 Generate GCP Key
 ```aiexclude
-playwright-pytest-gcp-2508
+playwright-pytes
+t-gcp-2508
 # 設定環境變數
 
 export PROJECT_ID=[YOUR_PROJECT_ID]
@@ -52,3 +53,8 @@ gcloud auth login
 gcloud auth configure-docker asia-east1-docker.pkg.dev
 make docker-build-prod
 ```
+
+![google_artifact_registry_project.png](readme/google_artifact_registry_project.png)
+![google_artifact_registry_set_value.png](readme/google_artifact_registry_set_value.png)
+![google_artifact_registry_final_value.png](readme/google_artifact_registry_final_value.png)
+asia-east1-docker.pkg.dev/playwright-pytest-gcp-2508/playwright-repo

@@ -25,6 +25,8 @@ docker-push:
 	docker build -f $(DEPLOYMENT)Dockerfile -t asia-east1-docker.pkg.dev/playwright-pytest-gcp-2508/playwright-repo/playwright-image:latest .
 	docker push asia-east1-docker.pkg.dev/playwright-pytest-gcp-2508/playwright-repo/playwright-image:latest
 
+
+
 terraform-init:
 	cd $(TF_DIR) && terraform init
 
