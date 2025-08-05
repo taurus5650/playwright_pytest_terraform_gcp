@@ -7,6 +7,7 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">=3.13"
+packages = [{ include = "flask_app" }]
 dependencies = [
     "playwright (>=1.54.0,<2.0.0)",
     "pytest (>=8.4.1,<9.0.0)",

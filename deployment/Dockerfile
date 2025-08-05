@@ -29,4 +29,4 @@ RUN poetry run playwright install chromium
 
 EXPOSE 9801
 
-CMD ["poetry", "run", "python", "-m", "flask_app.trigger_automation"]
+CMD ["poetry", "run", "python", "flask_app/trigger_automation.py"]
