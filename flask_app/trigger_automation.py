@@ -1,5 +1,7 @@
 import subprocess
 import json
+from doctest import debug
+
 from flask import Flask, jsonify, request, Response
 from collections import OrderedDict
 import os
@@ -34,11 +36,18 @@ def automation_ui():
             timeout=1800,
 
         )
+        output = input.stdout.decode()
+
+        print("\n========== Pytest Output Start ==========")
+        for line in output.strip().split('\n'):
+            print(f"[pytest] {line}")
+        print("========== Pytest Output End ==========\n")
+
         result = OrderedDict([
             ("status", "success" if input.returncode == 0 else "failed"),
-            ("result", "check log for details."),
+            ("env", env_value),
             ("path", full_path),
-            ("env", env_value)
+            ("result", output),
         ])
         return Response(json.dumps(result), mimetype='application/json')
     except subprocess.TimeoutExpired as e:
@@ -58,4 +67,4 @@ def automation_ui():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 9801)))
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 9801)), debug=True)

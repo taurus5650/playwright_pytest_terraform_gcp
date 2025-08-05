@@ -16,7 +16,7 @@ correlation_id = uuid.uuid4()
 formatter = logging.Formatter(f'%(asctime)s | %(name)s | %(levelname)s | {correlation_id} | %(message)s')
 
 # ===== 2. Console handler =====
-console_handler = logging.StreamHandler(sys.stdout)
+console_handler = logging.StreamHandler(sys.stderr)
 console_handler.setLevel(logging.DEBUG)
 console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
