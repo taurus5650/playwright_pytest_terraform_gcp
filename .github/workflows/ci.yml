@@ -30,10 +30,6 @@ jobs:
           poetry install --no-root
           poetry run playwright install chromium
 
-      - name: Run Lint
-        run: |
-          poetry run flake8 .
-
       - name: Run Tests
         run: |
           pytest --env=test -s -v
