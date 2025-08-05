@@ -13,7 +13,7 @@ RUN apt update && apt install -y \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
-WORKDIR /app
+WORKDIR /playwright-app
 
 # Install Poetry & dependencies
 COPY pyproject.toml poetry.lock ./
@@ -29,4 +29,4 @@ RUN poetry run playwright install chromium
 
 EXPOSE 9170
 
-CMD ["poetry", "run", "python", "-m", "flask.trigger_automation"]
+CMD ["poetry", "run", "python", "-m", "flask_app.trigger_automation"]

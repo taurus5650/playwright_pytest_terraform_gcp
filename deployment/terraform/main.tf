@@ -1,7 +1,6 @@
 provider "google" {
   project = var.project_id
   region  = var.region
-  credentials = file(var.gcp_credentials_file)
 }
 
 resource "google_artifact_registry_repository" "docker_repo" {
@@ -19,7 +18,7 @@ resource "google_cloud_run_service" "service" {
       containers {
         image = var.image_url
         ports {
-          container_port = 9801
+          container_port = 9170
         }
       }
     }

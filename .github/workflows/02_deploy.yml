@@ -34,5 +34,3 @@ jobs:
 
       - name: terraform-apply
         run: make terraform-apply
-        env:
-          GCP_CREDENTIALS_PATH: ${{ steps.auth-google-cloud.outputs.credentials_file_path }}

@@ -1,13 +1,13 @@
 version: '3.8'
 
 services:
-  playwright-dev:
+  playwright-app:
     container_name: playwright-dev-container
     image: playwright-dev-image
     build:
       context: ..
       dockerfile: deployment/Dockerfile
     volumes:
-      - ../:/playwright-dev # hot reload, no need restart docker if only .py changed
+      - ../:/playwright-app # hot reload, no need restart docker if only .py changed
     ports:
       - '9170:9170'
