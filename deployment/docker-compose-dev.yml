@@ -10,4 +10,4 @@ services:
     volumes:
       - ../:/playwright-app # hot reload, no need restart docker if only .py changed
     ports:
-      - '9170:9170'
+      - '9801:9801'

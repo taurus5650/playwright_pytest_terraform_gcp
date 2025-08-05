@@ -27,6 +27,6 @@ COPY . .
 # Install Playwright browsers (chromium only)
 RUN poetry run playwright install chromium
 
-EXPOSE 9170
+EXPOSE 9801
 
 CMD ["poetry", "run", "python", "-m", "flask_app.trigger_automation"]
