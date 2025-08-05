@@ -1,46 +1,22 @@
-name: deploy-to-gcp
+name: deploy-cloudrun
 
 on:
   push:
     branches: [master]
-
-env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  REGION: ${{ secrets.GCP_REGION }}
-  SERVICE_NAME: automation-ui-playwright-pytest
-  IMAGE_NAME: app-repo/playwright-prod-image
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout-repository
-        uses: actions/checkout@v4
-
-      - name: autenthicate-to-gcp
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
-
-      - name: setup-gcloud
-        uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          install_components: 'beta'
-
-      - name: configure-docker-for-gcp
-        run: |
-          gcloud auth configure-docker ${REGION}-docker.pkg.dev
-
-      - name: build-and-push-image
-        run: |
-          make docker-build-prod
+      - uses: actions/checkout@v4
 
       - name: setup-terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: terraform-init-and-apply
+      - name: deploy-to-cloud-run
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
         run: |
           make terraform-init
           make terraform-apply

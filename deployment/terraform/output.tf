@@ -1,3 +1,3 @@
-output "cloud-run-url" {
-  value = google-cloud-run-service.service.status[0].url
+output "url" {
+  value = google_cloud_run_service.service.status[0].url
 }

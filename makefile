@@ -1,11 +1,10 @@
 DEPLOYMENT = deployment/
-TF_DIR = $(DEPLOYMENT)/terraform
+
 DOCKER_DEV = docker-compose-dev.yml
-
 IMAGE_DEV = playwright-dev-image
-IMAGE_PROD = playwright-prod-image
-GCP_IMAGE = $(REGION)-docker.pkg.dev/$(PROJECT_ID)/app-repo/$(IMAGE_PROD)
 
+
+TF_DIR = $(DEPLOYMENT)/terraform
 
 install-playwright-chromium:
 	poetry install
@@ -19,21 +18,15 @@ run-dev-docker:
 	docker ps
 	# pytest --env=test -s -v
 
-docker-build-prod:
-	docker build -t $(GCP_IMAGE):latest -f $(DEPLOYMENT)/Dockerfile .
-	docker push $(GCP_IMAGE):latest
+
+
+docker-push:
+	gcloud auth configure-docker asia-east1-docker.pkg.dev
+	docker build -t asia-east1-docker.pkg.dev/sy-gcp/playwright-repo/playwright-image:latest .
+	docker push asia-east1-docker.pkg.dev/sy-gcp/playwright-repo/playwright-image:latest
 
 terraform-init:
 	cd $(TF_DIR) && terraform init
 
 terraform-apply:
-	cd $(TF_DIR) && terraform apply -auto-approve \
-		-var="project_id=$(PROJECT_ID)" \
-		-var="region=$(REGION)" \
-		-var="image=$(GCP_IMAGE):latest"
-
-terraform-destroy:
-	cd $(TF_DIR) && terraform destroy -auto-approve \
-		-var="project_id=$(PROJECT_ID)" \
-		-var="region=$(REGION)" \
-		-var="image=$(GCP_IMAGE):latest"
+	cd $(TF_DIR) && terraform apply -auto-approve

@@ -1,3 +1,4 @@
 variable "project_id" {}
 variable "region" {}
-variable "image" {}
+variable "service_name" {}
+variable "image_url" {}

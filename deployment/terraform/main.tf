@@ -1,22 +1,25 @@
 provider "google" {
   project = var.project_id
-  region = var.region
+  region  = var.region
 }
 
-resource "google-artifact-registry-repository" "repo" {
+resource "google_artifact_registry_repository" "docker_repo" {
   location      = var.region
-  repository_id = "app-repo"
+  repository_id = "playwright-repo"
   format        = "DOCKER"
 }
 
-resource "google-cloud-run-service" "service" {
-  name      = "playwriht-service"
-  location  = var.region
+resource "google_cloud_run_service" "service" {
+  name     = var.service_name
+  location = var.region
 
   template {
     spec {
-      container {
-        image = var.image
+      containers {
+        image = var.image_url
+        ports {
+          container_port = 8080
+        }
       }
     }
   }
@@ -25,14 +28,11 @@ resource "google-cloud-run-service" "service" {
     percent         = 100
     latest_revision = true
   }
-
-  autogenerate_revision_name = true
-
 }
 
-resource "google-cloud-run-service-iam-member" "noauth" {
-  location  = google-cloud-run-service.service.location
-  service   = google-cloud-run-service.service.name
-  role      = "roles/run.invoker"
-  member    = "allUsers"
+resource "google_cloud_run_service_iam_member" "noauth" {
+  location = var.region
+  service  = google_cloud_run_service.service.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
 }
