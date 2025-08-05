@@ -1,5 +1,6 @@
 import subprocess
-from flask import Flask, jsonify, request
+import json
+from flask import Flask, jsonify, request, Response
 from collections import OrderedDict
 import os
 import sys
@@ -16,37 +17,44 @@ BASE_TEST_DIR = 'test_suite'
 def automation_ui():
     try:
         req_data = request.get_json(silent=True) or {}
-        test_path = req_data.get('path', '')
 
+        test_path = req_data.get('path', '')
         full_path = os.path.join(BASE_TEST_DIR, test_path)
         logger.info(f'flask path={full_path}')
 
+        env_value = req_data.get('env', 'test')
+        logger.info(f'flask env={env_value}')
+        env = os.environ.copy()
+        env['ENV'] = env_value
+
         input = subprocess.run(
-            ['pytest', full_path, '-v', '--tb=short'],
+            ['pytest', full_path, '-v', '--tb=short', f'--env={env_value}'],
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
-            timeout=1800
+            timeout=1800,
+
         )
-        output = input.stdout.decode()
         result = OrderedDict([
             ("status", "success" if input.returncode == 0 else "failed"),
-            ("result", output)
+            ("result", "check log for details."),
+            ("path", full_path),
+            ("env", env_value)
         ])
-        return jsonify(result)
+        return Response(json.dumps(result), mimetype='application/json')
     except subprocess.TimeoutExpired as e:
         logger.error(f'flask eeror: {e}')
         result = OrderedDict([
             ("status", "error"),
             ("result", f"{e}")
         ])
-        return jsonify(result)
+        return Response(json.dumps(result), mimetype='application/json')
     except Exception as e:
         logger.error(f'flask error: {e}')
         result = OrderedDict([
             ("status", "error"),
             ("result", f"{e}")
         ])
-        return jsonify(result)
+        return Response(json.dumps(result), mimetype='application/json')
 
 
 if __name__ == "__main__":
