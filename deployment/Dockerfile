@@ -24,5 +24,7 @@ RUN pip install poetry && \
 # Copy source code
 COPY . .
 
+EXPOSE 9801
+
 # Install Playwright browsers (chromium only)
 RUN poetry run playwright install chromium
