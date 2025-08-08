@@ -10,8 +10,9 @@ TF_REPO := playwright-terraform-repo
 TF_SERVICE_NAME := playwright-terraform-service
 ASIA_PKG := asia-east1-docker.pkg.dev
 
+GIT_SHA := $(shell git rev-parse --short HEAD)
 IMAGE_NAME := playwright-terraform-image
-IMAGE_TAG := latest
+IMAGE_TAG := $(GIT_SHA)
 IMAGE_URI := $(ASIA_PKG)/$(GCP_PROJECT_ID)/$(TF_REPO)/$(IMAGE_NAME):$(IMAGE_TAG)
 
 
@@ -52,10 +53,15 @@ run-terraform-import-all: # Telling GCP that Terraform will handle these GCP res
 		google_cloud_run_service.playwright_terraform_service asia-east1/$(TF_SERVICE_NAME) || true
 
 run-terraform-plan:
-	cd $(TF_DIR) && terraform plan -out=tfplan
+	cd $(TF_DIR) && terraform plan -out=tfplan\
+		-var="image_name=$(IMAGE_NAME)" \
+	  	-var="image_tag=$(IMAGE_TAG)"
 
 run-terraform-apply:
-	cd $(TF_DIR) && terraform apply -auto-approve
+	cd $(TF_DIR) && terraform apply -auto-approve \
+		-var="image_name=$(IMAGE_NAME)" \
+		-var="image_tag=$(IMAGE_TAG)" \
+		-var="deploy_timestamp=$(shell date +%s)"
 
 run-terraform-destroy:
 	@echo "⚠️ Are you sure you want to destroy everything ? "

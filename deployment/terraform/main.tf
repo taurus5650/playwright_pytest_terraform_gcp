@@ -9,6 +9,10 @@ resource "google_artifact_registry_repository" "docker_repo" {
   format        = "DOCKER"
 }
 
+locals {
+  image_url = "asia-east1-docker.pkg.dev/${var.project_id}/${var.terraform_repo}/${var.image_name}:${var.image_tag}"
+}
+
 resource "google_cloud_run_service" "playwright_terraform_service" {
   name     = var.service_name
   location = var.region
@@ -16,9 +20,15 @@ resource "google_cloud_run_service" "playwright_terraform_service" {
   template {
     spec {
       containers {
-        image = var.image_url
+        image = local.image_url
+
         ports {
           container_port = var.port
+        }
+
+        env {
+          name  = "DEPLOY_TIMESTAMP"
+          value = var.deploy_timestamp
         }
       }
     }
@@ -29,6 +39,7 @@ resource "google_cloud_run_service" "playwright_terraform_service" {
     latest_revision = true
   }
 }
+
 
 resource "google_cloud_run_service_iam_member" "noauth" {
   location = var.region
