@@ -1,4 +1,23 @@
-# Automation UI - Playwright, Terraform, Google Cloud
+
+
+<h1 align="center">Automation UI - Playwright, Terraform, Google Cloud</h1>
+
+<p align="center">
+<img src="https://img.shields.io/github/last-commit/sytest/playwright_pytest_terraform_gcp?style=flat-square" />
+<img src="https://img.shields.io/github/languages/top/sytest/playwright_pytest_terraform_gcp?color=blue&style=flat-square" />
+<img src="https://img.shields.io/github/languages/count/sytest/playwright_pytest_terraform_gcp?style=flat-square" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Flask-black?style=for-the-badge&logo=flask" />
+  <img src="https://img.shields.io/badge/Pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white" />
+  <img src="https://img.shields.io/badge/Playwright-45ba4b?style=for-the-badge&logo=playwright&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" />
+  <img src="https://img.shields.io/badge/Terraform-844FBA?style=for-the-badge&logo=terraform&logoColor=white" />
+  <img src="https://img.shields.io/badge/Google%20Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white" />
+</p>
 
 
 ## Table of Contents
