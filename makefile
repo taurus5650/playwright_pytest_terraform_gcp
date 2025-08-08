@@ -7,13 +7,14 @@ DOCKER_FILE = Dockerfile
 GCP_PROJECT_ID := playwright-pytest-gcp-2508
 TF_DIR := $(DEPLOYMENT)/terraform
 TF_REPO := playwright-terraform-repo
+TF_SERVICE_NAME := playwright-terraform-service
 ASIA_PKG := asia-east1-docker.pkg.dev
 
 IMAGE_NAME := playwright-terraform-image
 GIT_SHA := $(shell git rev-parse --short HEAD)
 IMAGE_TAG := $(GIT_SHA)
 IMAGE_URI := $(ASIA_PKG)/$(GCP_PROJECT_ID)/$(TF_REPO)/$(IMAGE_NAME):$(IMAGE_TAG)
-TF_SERVICE_NAME := playwright-terraform-service
+
 
 run-dev-docker:
 	docker compose -f $(DEPLOYMENT)$(DOCKER_DEV) down
@@ -62,3 +63,13 @@ run-terraform-destroy:
 	@echo "⚠️ Press Ctrl+C to cancel."
 	sleep 10
 	cd $(TF_DIR) && terraform destroy -auto-approve
+
+check-gcp-log:
+	 gcloud logging read \
+	  'resource.type="cloud_run_revision" \
+	   AND resource.labels.service_name="$(TF_SERVICE_NAME)" \
+	   AND resource.labels.location="asia-east1"' \
+	  --project=$(GCP_PROJECT_ID) \
+	  --limit=1000 \
+	  --format="value(textPayload)"
+
