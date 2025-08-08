@@ -14,6 +14,10 @@ from utils.logger import logger
 app = Flask(__name__)
 BASE_TEST_DIR = 'test_suite'
 
+@app.get("/health")
+def health_check():
+    return 'ok', 200
+
 @app.route("/")
 def hello():
     return '<h1>Happy Testing :)</h1>'
@@ -68,8 +72,16 @@ def automation_ui():
         ])
         return Response(json.dumps(result), mimetype='application/json')
 
+@app.errorhandler(404)
+def not_found(e):
+    msg = f'404 for path: {request.path}'
+    logger.warning(msg)
+    return f'Not Found. {msg}', 404
 
 if __name__ == "__main__":
+    logger.info('>>> Flask starting... Route map:')
+    for rule in app.url_map.iter_rules():
+        logger.info(f'{list(rule.methods)} {rule}')
 
     debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 9801)), debug=debug_mode)

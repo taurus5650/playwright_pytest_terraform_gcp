@@ -10,7 +10,8 @@ TF_REPO := playwright-terraform-repo
 ASIA_PKG := asia-east1-docker.pkg.dev
 
 IMAGE_NAME := playwright-terraform-image
-IMAGE_TAG := latest
+GIT_SHA := $(shell git rev-parse --short HEAD)
+IMAGE_TAG := $(GIT_SHA)
 IMAGE_URI := $(ASIA_PKG)/$(GCP_PROJECT_ID)/$(TF_REPO)/$(IMAGE_NAME):$(IMAGE_TAG)
 TF_SERVICE_NAME := playwright-terraform-service
 
@@ -37,9 +38,6 @@ run-terraform-validate:
 
 run-terraform-fmt:
 	cd $(TF_DIR) && terraform fmt -recursive
-
-run-terraform-plan:
-	cd $(TF_DIR) && terraform plan -out=tfplan
 
 run-docker-push-to-artifact-registry:
 	gcloud auth configure-docker $(ASIA_PKG)
