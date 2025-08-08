@@ -53,10 +53,10 @@ run-terraform-import-all: # Telling GCP that Terraform will handle these GCP res
 	cd $(TF_DIR) && terraform import \
 		google_cloud_run_service.playwright_terraform_service asia-east1/$(TF_SERVICE_NAME) || true
 
-terraform-plan:
+run-terraform-plan:
 	cd $(TF_DIR) && terraform plan -out=tfplan
 
-terraform-apply:
+run-terraform-apply:
 	cd $(TF_DIR) && terraform apply -auto-approve
 
 run-terraform-destroy:
