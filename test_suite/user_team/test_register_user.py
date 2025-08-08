@@ -66,3 +66,7 @@ class TestCase:
         actual_enter_account_info = self.signup.inner_text_enter_account_info()
         assert actual_enter_account_info == expected_enter_account_info_text
         # endregion __Step7. Verify that 'ENTER ACCOUNT INFORMATION' is visible
+
+        # region __Step8. Fill details: Title, Name, Email, Password, Date of birth
+        self.signup.click_title_gender_radio()
+        # endregion __Step8. Fill details: Title, Name, Email, Password, Date of birth

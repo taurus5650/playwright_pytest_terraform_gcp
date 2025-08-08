@@ -11,3 +11,6 @@ class SignupPage:
 
     def inner_text_enter_account_info(self):
         return self.driver.inner_text(selector=self.locator.ENTER_ACCOUNT_INFO_TEXT)
+
+    def click_title_gender_radio(self):
+        return self.driver.checkbox_or_radio(selector=self.locator.ID_GENDER_1)

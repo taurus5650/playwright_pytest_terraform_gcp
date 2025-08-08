@@ -16,9 +16,8 @@ WORKDIR /playwright-app
 COPY pyproject.toml poetry.lock ./
 
 # Install poetry + dependencies
-RUN pip install poetry && \
-    poetry config virtualenvs.create false && \
-    poetry install --no-root
+RUN pip install poetry && poetry config virtualenvs.create true \
+    && poetry install --no-root
 
 # Install playwright browser
 RUN poetry run playwright install chromium

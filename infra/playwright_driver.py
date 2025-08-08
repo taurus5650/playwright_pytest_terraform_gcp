@@ -41,9 +41,24 @@ class PlaywrightDriver:
             if timeout is None:
                 timeout = self.TIMEOUT
 
-            self.page.locator(selector=selector).click(timeout=timeout)
+            locator = self.page.locator(selector=selector)
+            locator.wait_for(state='visible', timeout=timeout)
+            return locator.click(timeout=timeout)
         except Exception as e:
             self._handle_exception_screenshot(action='click', exception=e)
+
+    def checkbox_or_radio(self, selector: str, timeout: int = None):
+        logger.info(f'checkbox_or_radio={selector}')
+        try:
+            if timeout is None:
+                timeout = self.TIMEOUT
+
+            locator = self.page.locator(selector=selector)
+            locator.wait_for(state='attached', timeout=timeout)  # DOM
+            locator.wait_for(state='visible', timeout=timeout)  # Waiting CSS done
+            return locator.check(timeout=timeout)
+        except Exception as e:
+            self._handle_exception_screenshot(action='checkbox_or_radio', exception=e)
 
     def fill(self, selector: str, value: str):
         logger.info(f'fill={selector}')
@@ -58,8 +73,8 @@ class PlaywrightDriver:
             if timeout is None:
                 timeout = self.TIMEOUT
             locator = self.page.locator(selector=selector)
-            locator.wait_for(state='visible', timeout=timeout) # Visible = Waiting CSS done (display != None, opcity != 0)
-            return locator.inner_text() # Page's text, including child node
+            locator.wait_for(state='visible', timeout=timeout)  # Visible = Waiting CSS done (display != None, opcity != 0)
+            return locator.inner_text()  # Page's text, including child node
         except Exception as e:
             self._handle_exception_screenshot(action='inner_text', exception=e)
 
