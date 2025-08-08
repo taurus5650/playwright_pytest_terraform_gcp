@@ -2,11 +2,6 @@
 
 <h1 align="center">Automation UI - Playwright, Terraform, Google Cloud</h1>
 
-<p align="center">
-<img src="https://img.shields.io/github/last-commit/sytest/playwright_pytest_terraform_gcp?style=flat-square" />
-<img src="https://img.shields.io/github/languages/top/sytest/playwright_pytest_terraform_gcp?color=blue&style=flat-square" />
-<img src="https://img.shields.io/github/languages/count/sytest/playwright_pytest_terraform_gcp?style=flat-square" />
-</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Flask-black?style=for-the-badge&logo=flask" />
