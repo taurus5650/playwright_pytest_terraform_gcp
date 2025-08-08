@@ -1,63 +1,94 @@
-# -automation_ui_playwright_pytest
+# Automation UI - Playwright, Terraform, Google Cloud
 
 
+## Table of Contents
+- [Stack](#stack)
+- [Project Structure](#project-structure)
+- [Quick Start (Local)](#quick-start-local)
+- [Run Tests](#run-tests)
+- [Flask Trigger API](#flask-trigger-api)
 
-Generate GCP Key
-```aiexclude
-playwright-pytes
-t-gcp-2508
-# 設定環境變數
+## Stack
 
-export PROJECT_ID=[YOUR_PROJECT_ID]
-export ACCOUNT_NAME=terraform-ci
+- **Language**: Python 3.12+ (Poetry for dependency management)
+- **Testing**: Playwright, Pytest, Allure
+- **Service**: Flask (exposes `/test_target` to run tests)
+- **Container**: Docker / docker‑compose (for dev mode)
+- **Cloud**: Google Cloud Run + Artifact Registry
+- **IaC**: Terraform
+- **CI/CD**: GitHub Actions
 
-# 登入你的 GCP CLI
-gcloud auth login
-gcloud config set project $PROJECT_ID
 
-# 建立 Service Account
-gcloud iam service-accounts create $ACCOUNT_NAME \
-  --display-name="Terraform GitHub CI"
-
-# 賦予權限
-gcloud projects add-iam-policy-binding $PROJECT_ID \
-  --member="serviceAccount:$ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com" \
-  --role="roles/editor"
-
-# 產生金鑰
-gcloud iam service-accounts keys create terraform-ci.json \
-  --iam-account=$ACCOUNT_NAME@$PROJECT_ID.iam.gserviceaccount.com
-
+## Project Structure
+```commandline
+.
+├── api
+├── config
+│   ├── prod.ini
+│   ├── test.ini
+│   └── uat.ini
+├── conftest.py
+├── database
+├── deployment
+│   ├── Dockerfile
+│   ├── docker-compose-dev.yml
+│   └── terraform
+├── flask_app
+│   └── trigger_automation.py
+├── infra
+│   ├── api_request.py
+│   ├── config.py
+│   ├── mongo_database.py
+│   └── playwright_driver.py
+├── makefile
+├── page
+│   ├── home_page
+│   ├── login_page
+│   └── signup_page
+│   └── ...
+├── poetry.lock
+├── pyproject.toml
+├── pytest.ini
+├── readme
+├── readme.md
+├── test_suite
+│   ├── user_team
+│   ├── xxx_team
+│   └── z_repo_unit
+└── utils
+    └── logger.py
 ```
 
-```aiexclude
-設定 GitHub Secrets：
-
-GCP_CREDENTIALS：貼上 terraform-ci.json 內容（整個 JSON 貼進去）
-
-GCP_PROJECT_ID：填你的 Project ID
-
-GCP_REGION：建議 asia-east1（台灣最近的區域）
-
-是 Action 的 env 還是 repo secrest
-```
-![gihub_action_value.png](readme/gihub_action_value.png)
-
-
-Enable Artifact Registry API
-https://console.cloud.google.com/apis/library/artifactregistry.googleapis.com?inv=1&invt=Ab4lPw&authuser=2&project=playwright-pytest&flow=gcp
-![google_artifact_registry_enable.png](readme/google_artifact_registry_enable.png)
-
-```
-gcloud auth login
-gcloud auth configure-docker asia-east1-docker.pkg.dev
-make docker-build-prod
+## Quick Start
+### DEV Mode 
+```commandline
+$ make run-dev-docker
 ```
 
-![google_artifact_registry_project.png](readme/google_artifact_registry_project.png)
-![google_artifact_registry_set_value.png](readme/google_artifact_registry_set_value.png)
-![google_artifact_registry_final_value.png](readme/google_artifact_registry_final_value.png)
-asia-east1-docker.pkg.dev/playwright-pytest-gcp-2508/playwright-repo
+### Setup Terraform & Google Cloud
+Kindly ref. https://github.com/taurus5650/terraform_gcp_practice_step_by_step
 
-enable permission
-![google_cloud_run_admin.png](readme/google_cloud_run_admin.png)
+## Operation
+- If PROD (everyone able to trigger the automation UI feature)
+```commandline
+curl --location 'https://playwright-terraform-service-6vveicetna-de.a.run.app/test_target' \
+--header 'Content-Type: application/json' \
+--data '{
+    "path": "user_team",
+    "env": "test"
+}'
+```
+![prod-request.png](readme/prod-request.png)
+![prod-log.png](readme/prod-log.png)
+
+- If DEV mode (development by SDET)
+```commandline
+curl --location 'http://localhost:9180/test_target' \
+--header 'Content-Type: application/json' \
+--data '{
+    "path": "user_team",
+    "env": "test"
+}'
+`![dev-mode-log.png](readme/dev-mode-log.png)``
+
+

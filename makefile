@@ -31,6 +31,12 @@ install-playwright-chromium:
 	poetry install --no-root
 	poetry run playwright install chromium
 
+run-terraform-first-time-enable-tf:
+	cd $(TF_DIR) && terraform init && terraform apply -auto-approve \
+	-target=google_project_service.artifact_registry \
+	-target=google_project_service.cloud_run \
+	-target=google_project_service.compute \
+
 run-terraform-init:
 	cd $(TF_DIR) && terraform init
 
