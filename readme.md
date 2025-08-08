@@ -4,9 +4,8 @@
 ## Table of Contents
 - [Stack](#stack)
 - [Project Structure](#project-structure)
-- [Quick Start (Local)](#quick-start-local)
-- [Run Tests](#run-tests)
-- [Flask Trigger API](#flask-trigger-api)
+- [Quick Start](#quick-start)
+- [Operation](#operation)
 
 ## Stack
 
