@@ -6,7 +6,7 @@ authors = [
     {name = "taurus5650",email = "taurus_5650@hotmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 packages = [{ include = "flask_app" }]
 dependencies = [
     "playwright (>=1.54.0,<2.0.0)",

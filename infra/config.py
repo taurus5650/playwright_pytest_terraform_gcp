@@ -8,6 +8,7 @@ class EnvConfig:
         cfg_file = os.path.join(os.path.dirname(__file__), '..', 'config', f'{env}.ini')
 
         parser = ConfigParser()
+        parser.optionxform = str
         parser.read(cfg_file)
         self.parser = parser
 

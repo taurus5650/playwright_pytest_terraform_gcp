@@ -23,8 +23,8 @@ jobs:
         run: make install-poetry
       - name: install-dependencies
         run: make install-playwright-chromium
-#      - name: run-unit-test
-#        run: pytest --env=test -s -v
+      - name: run-unit-test
+        run: pytest --env=test -s -v test_suite/z_repo_unit
       - name: setup-google-cloud-credential
         uses: google-github-actions/auth@v2
         with:

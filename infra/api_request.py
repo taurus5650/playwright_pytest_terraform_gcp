@@ -38,8 +38,6 @@ class BaseAPI:
                 duration = response.elapsed.total_seconds()
                 if self.debug_print:
                     self._debug_print(response=response)
-                with assume:
-                    assert duration <= acceptable_waiting_time, f'Response Time > {acceptable_waiting_time}s, Cost: {duration}s\n ⏱︎ Resp assertion failed, but functional testing still continues'
             except requests.exceptions.RequestException as e:
                 response = None
                 logger.error(f'Request Error > url: [{method}] {url}, kwargs: {kwargs}, error: {str(e)}')

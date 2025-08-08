@@ -6,7 +6,7 @@ from typing import Any
 import certifi
 import pymongo
 from bson import json_util
-from infra.config import env_config
+from infra.config import get_env_config
 from pymongo import errors
 
 from utils.logger import logger
@@ -14,12 +14,12 @@ from utils.logger import logger
 
 class PyMongoDB():
 
-    def __init__(self, section: str = "HOMEPAGE_DATBASE"):
-        logger.info(f"Initiate MongoDB connection from .ini section: {section}")
-        self._config = env_config.get_section(section)
-        self._client = None
-        self._db = None
-        self.connect()
+    def __init__(self, config: dict = None, client: pymongo.MongoClient = None):
+        if config is None:
+            config = get_env_config().get_dict_key('HOMEPAGE_DATABASE')
+        self._config = config
+        self._client = client or self.connect()
+        self._db = self._client[self._config['DATABASE']]
 
     def remove_empty_values(self, condition: dict) -> dict:
         result = {}
@@ -38,9 +38,10 @@ class PyMongoDB():
             self, max_pool_size: int = 50, min_pool_size: int = 10, max_idle_time_ms: int = 30000,
             server_selection_timeout_ms: int = 5000):
         try:
+            c = self._config
             connection_str = (
-                f"mongodb+srv://{self._config['USER']}:{self._config['PASSWORD']}"
-                f"@{self._config['HOST']}/{self._config['DATABASE']}?retryWrites=true&w=majority"
+                f"mongodb+srv://{c['USER']}:{c['PASSWORD']}@{c['HOST']}/{c['DATABASE']}"
+                f"?retryWrites=true&w=majority"
             )
             self._client = pymongo.MongoClient(
                 connection_str, tlsCAFile=certifi.where(),
@@ -51,14 +52,14 @@ class PyMongoDB():
             )
             self._db = self._client[self._config['DATABASE']]
             self._client.admin.command('ping')  # Testing client connection
-            logger.info("MongoDB connection established successfully")
+            logger.info('MongoDB connection established successfully')
         except pymongo.errors.ConnectionFailure as e:
-            logger.error(f"MongoDB ConnectionFailure: {e}")
+            logger.error(f'MongoDB ConnectionFailure: {e}"')
             self._client = None
             self._db = None
             raise
         except Exception as e:
-            logger.error(f"MongoDB Exception: {e}")
+            logger.error(f'MongoDB Exception: {e}')
             self._client = None
             self._db = None
             raise
@@ -112,9 +113,9 @@ class PyMongoDB():
             )
             return res
         except pymongo.errors.PyMongoError as e:
-            raise Exception(f"MongoDB PyMongoError: {e}")
+            raise Exception(f'MongoDB PyMongoError: {e}')
         except Exception as e:
-            raise Exception(f"MongoDB Exception: {e}")
+            raise Exception(f'MongoDB Exception: {e}')
 
     def insert_one(self, collection_name: str, document: dict):
         start_time = time.time()
@@ -134,7 +135,7 @@ class PyMongoDB():
             )
             return result
         except Exception as e:
-            raise Exception(f"MongoDB Exception: {e}")
+            raise Exception(f'MongoDB Exception: {e}"')
 
     def update_one(
             self, collection_name: str, filter_query: dict, update_data: dict):
@@ -159,7 +160,7 @@ class PyMongoDB():
             )
             return result
         except Exception as e:
-            raise Exception(f"MongoDB Exception: {e}")
+            raise Exception(f'MongoDB Exception: {e}')
 
     def delete_one(self, collection_name: str, filter_query: dict):
         start_time = time.time()
@@ -181,12 +182,12 @@ class PyMongoDB():
             )
             return result
         except Exception as e:
-            raise Exception(f"MongoDB delete_one Exception: {e}")
+            raise Exception(f'MongoDB Exception: {e}')
 
     def close(self):
         if self._client:
             self._client.close()
-            logger.info("MongoDB connection closed")
+            logger.info('MongoDB connection closed"')
 
     def _debug_print(
             self, collection_name: str, query: Any, result: Any, args: dict = None):
