@@ -87,6 +87,7 @@ curl --location 'http://localhost:9180/test_target' \
     "path": "user_team",
     "env": "test"
 }'
-`![dev-mode-log.png](readme/dev-mode-log.png)``
+```
+![dev-mode-log.png](readme/dev-mode-log.png)
 
 
