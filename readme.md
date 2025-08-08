@@ -63,7 +63,7 @@
 $ make run-dev-docker
 ```
 
-### Setup Terraform & Google Cloud
+### Setup Github Action, Terraform, Google Cloud
 Kindly ref. https://github.com/taurus5650/terraform_gcp_practice_step_by_step
 
 ## Operation
