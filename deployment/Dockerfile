@@ -12,18 +12,18 @@ RUN apt update && apt install -y \
 
 WORKDIR /playwright-app
 
-# ----- Step 1: Copy only requirements for faster cache -----
+# Copy only requirements for faster cache
 COPY pyproject.toml poetry.lock ./
 
-# ----- Step 2: Install poetry + dependencies -----
+# Install poetry + dependencies
 RUN pip install poetry && \
     poetry config virtualenvs.create false && \
     poetry install --no-root
 
-# ----- Step 3: Install playwright browser -----
+# Install playwright browser
 RUN poetry run playwright install chromium
 
-# ----- Step 4: Copy all source code -----
+# Copy all source code
 COPY . .
 
 EXPOSE 9801

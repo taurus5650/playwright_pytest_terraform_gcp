@@ -1,11 +1,11 @@
-import subprocess
 import json
-from doctest import debug
+import os
+import subprocess
+import sys
+from collections import OrderedDict
 
 from flask import Flask, jsonify, request, Response
-from collections import OrderedDict
-import os
-import sys
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.logger import logger
@@ -14,8 +14,11 @@ from utils.logger import logger
 app = Flask(__name__)
 BASE_TEST_DIR = 'test_suite'
 
+@app.route("/")
+def hello():
+    return '<h1>Happy Testing :)</h1>'
 
-@app.route('/automation_ui', methods=['POST'])
+@app.route('/test_target', methods=['POST'])
 def automation_ui():
     try:
         req_data = request.get_json(silent=True) or {}
@@ -67,6 +70,6 @@ def automation_ui():
 
 
 if __name__ == "__main__":
-    debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
 
+    debug_mode = os.environ.get('FLASK_DEBUG', 'false').lower() == 'true'
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 9801)), debug=debug_mode)

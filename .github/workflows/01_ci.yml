@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  test-and-build:
+  check:
     runs-on: ubuntu-latest
 
     env:
@@ -15,31 +15,27 @@ jobs:
     steps:
       - name: checkout-code
         uses: actions/checkout@v4
-
       - name: setup-python-for-ut
         uses: actions/setup-python@v4
         with:
           python-version: '3.13'
-
       - name: install poetry
         run: make install-poetry
-
       - name: install-dependencies
         run: make install-playwright-chromium
-
 #      - name: run-unit-test
 #        run: pytest --env=test -s -v
-
-      - name: auth-google-cloud
+      - name: setup-google-cloud-credential
         uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-
-      - name: setup-google-cli
+      - name: install-google-cli
         uses: google-github-actions/setup-gcloud@v1
-
-      - name: auth-docker-to-artifact-registry
-        run: make gcloud-auth-docker-to-artifact-registry
-
-      - name: build-and-push-docker-image
-        run: make docker-push
+      - name: install-terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: terraform-init
+        run: make run-terraform-init
+      - name: terraform-fmt
+        run: make run-terraform-fmt
+      - name: terraform-validate
+        run: make run-terraform-validate

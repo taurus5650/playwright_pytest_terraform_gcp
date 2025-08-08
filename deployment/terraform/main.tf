@@ -5,11 +5,11 @@ provider "google" {
 
 resource "google_artifact_registry_repository" "docker_repo" {
   location      = var.region
-  repository_id = "playwright-repo"
+  repository_id = var.terraform_repo
   format        = "DOCKER"
 }
 
-resource "google_cloud_run_service" "service" {
+resource "google_cloud_run_service" "playwright_terraform_service" {
   name     = var.service_name
   location = var.region
 
@@ -18,7 +18,7 @@ resource "google_cloud_run_service" "service" {
       containers {
         image = var.image_url
         ports {
-          container_port = 9801
+          container_port = var.port
         }
       }
     }
@@ -32,7 +32,7 @@ resource "google_cloud_run_service" "service" {
 
 resource "google_cloud_run_service_iam_member" "noauth" {
   location = var.region
-  service  = google_cloud_run_service.service.name
+  service  = google_cloud_run_service.playwright_terraform_service.name
   role     = "roles/run.invoker"
   member   = "allUsers"
 }
