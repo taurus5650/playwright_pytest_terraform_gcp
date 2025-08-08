@@ -11,8 +11,7 @@ TF_SERVICE_NAME := playwright-terraform-service
 ASIA_PKG := asia-east1-docker.pkg.dev
 
 IMAGE_NAME := playwright-terraform-image
-GIT_SHA := $(shell git rev-parse --short HEAD)
-IMAGE_TAG := $(GIT_SHA)
+IMAGE_TAG := latest
 IMAGE_URI := $(ASIA_PKG)/$(GCP_PROJECT_ID)/$(TF_REPO)/$(IMAGE_NAME):$(IMAGE_TAG)
 
 
