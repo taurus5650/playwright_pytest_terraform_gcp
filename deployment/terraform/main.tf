@@ -18,7 +18,7 @@ resource "google_cloud_run_service" "playwright_terraform_service" {
       containers {
         image = var.image_url
         ports {
-          container_port = var.port
+          container_port = 9801
         }
       }
     }
