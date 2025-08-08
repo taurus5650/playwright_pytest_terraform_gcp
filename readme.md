@@ -8,15 +8,14 @@
 - [Operation](#operation)
 
 ## Stack
-
 - **Language**: Python 3.12+ (Poetry for dependency management)
 - **Testing**: Playwright, Pytest, Allure
+- **Test data**: https://automationexercise.com/
 - **Service**: Flask (exposes `/test_target` to run tests)
 - **Container**: Docker / docker‑compose (for dev mode)
 - **Cloud**: Google Cloud Run + Artifact Registry
 - **IaC**: Terraform
 - **CI/CD**: GitHub Actions
-
 
 ## Project Structure
 ```commandline
