@@ -2,6 +2,7 @@ from playwright.sync_api import sync_playwright, Page, Browser, BrowserContext, 
 from utils.logger import logger
 import os
 import time
+from typing import List, Union, Optional, Iterable, overload
 
 
 class PlaywrightDriver:
@@ -26,6 +27,13 @@ class PlaywrightDriver:
         logger.error(f'{action} failed: {exception}')
         self.screenshot()
         raise exception
+
+    def page_pause(self):
+        logger.info(f'page_pause')
+        try:
+            return self.page.pause()
+        except Exception as e:
+            self._handle_exception_screenshot(action='page_pause', exception=e)
 
     def goto(self, url: str):
         logger.info(f'goto={url}')
@@ -59,6 +67,19 @@ class PlaywrightDriver:
             return locator.check(timeout=timeout)
         except Exception as e:
             self._handle_exception_screenshot(action='checkbox_or_radio', exception=e)
+
+    def select_option_with_value(self, selector: str, value: Union[str, List[str]], timeout: int = None):  # dropdown list
+        logger.info(f'select_option={selector}')
+        try:
+            if timeout is None:
+                timeout = self.TIMEOUT
+
+            locator = self.page.locator(selector=selector)
+            locator.wait_for(state='attached', timeout=timeout)  # DOM
+            locator.wait_for(state='visible', timeout=timeout)  # Waiting CSS done
+            return locator.select_option(timeout=timeout, value=value)
+        except Exception as e:
+            self._handle_exception_screenshot(action='click', exception=e)
 
     def fill(self, selector: str, value: str):
         logger.info(f'fill={selector}')
