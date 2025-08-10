@@ -69,7 +69,7 @@ class PlaywrightDriver:
             self._handle_exception_screenshot(action='checkbox_or_radio', exception=e)
 
     def select_option_with_value(self, selector: str, value: Union[str, List[str]], timeout: int = None):  # dropdown list
-        logger.info(f'select_option={selector}')
+        logger.info(f'select_option_with_value={selector}')
         try:
             if timeout is None:
                 timeout = self.TIMEOUT
