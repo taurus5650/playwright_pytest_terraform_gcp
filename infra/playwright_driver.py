@@ -79,7 +79,7 @@ class PlaywrightDriver:
             locator.wait_for(state='visible', timeout=timeout)  # Waiting CSS done
             return locator.select_option(timeout=timeout, value=value)
         except Exception as e:
-            self._handle_exception_screenshot(action='click', exception=e)
+            self._handle_exception_screenshot(action='select_option_with_value', exception=e)
 
     def fill(self, selector: str, value: str):
         logger.info(f'fill={selector}')
