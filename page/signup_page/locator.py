@@ -5,3 +5,4 @@ class Locator(object):
     PASSWORD = '#password'
     DATE_OF_BIRTH_DROPDOWN_DAYS = 'select#days'
     DATE_OF_BIRTH_DROPDOWN_MONTHS ='select#months'
+    DATE_OF_BIRTH_DROPDOWN_YEARS = 'select#years'

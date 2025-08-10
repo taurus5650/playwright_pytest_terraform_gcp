@@ -22,3 +22,7 @@ class SignupPage:
 
     def select_date_of_birth_dropdown_list_month(self, value: str):
         return self.driver.select_option_with_value(selector=self.locator.DATE_OF_BIRTH_DROPDOWN_MONTHS, value=value)
+
+    def select_date_of_birth_dropdown_list_year(self, value: str):
+        return self.driver.select_option_with_value(selector=self.locator.DATE_OF_BIRTH_DROPDOWN_YEARS, value=value)
+

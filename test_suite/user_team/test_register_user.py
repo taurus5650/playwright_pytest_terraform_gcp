@@ -75,4 +75,5 @@ class TestCase:
         self.signup.fill_password(value=password)
         self.signup.select_date_of_birth_dropdown_list_date(value=birth_date)
         self.signup.select_date_of_birth_dropdown_list_month(value=birth_month)
+        self.signup.select_date_of_birth_dropdown_list_year(value=birth_year)
         # endregion __Step8. Fill details: Title, Name, Email, Password, Date of birth
