@@ -62,8 +62,7 @@ class PlaywrightDriver:
                 timeout = self.TIMEOUT
 
             locator = self.page.locator(selector=selector)
-            locator.wait_for(state='attached', timeout=timeout)  # DOM
-            locator.wait_for(state='visible', timeout=timeout)  # Waiting CSS done
+            locator.wait_for(state='visible', timeout=timeout)  # Visible = Waiting CSS done (display != None, opcity != 0)
             return locator.check(timeout=timeout)
         except Exception as e:
             self._handle_exception_screenshot(action='checkbox_or_radio', exception=e)
@@ -75,8 +74,7 @@ class PlaywrightDriver:
                 timeout = self.TIMEOUT
 
             locator = self.page.locator(selector=selector)
-            locator.wait_for(state='attached', timeout=timeout)  # DOM
-            locator.wait_for(state='visible', timeout=timeout)  # Waiting CSS done
+            locator.wait_for(state='visible', timeout=timeout)  # Visible = Waiting CSS done (display != None, opcity != 0)
             return locator.select_option(timeout=timeout, value=value)
         except Exception as e:
             self._handle_exception_screenshot(action='select_option_with_value', exception=e)
