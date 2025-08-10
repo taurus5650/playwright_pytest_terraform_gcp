@@ -17,5 +17,8 @@ class SignupPage:
     def fill_password(self, value: str):
         return self.driver.fill(selector=self.locator.PASSWORD, value=value)
 
-    def select_date_of_birth_dropdown_list(self, value: str):
-        return self.driver.select_option_with_value(selector=self.locator.DATE_OF_BIRTH_DAYS_DROPDOWN, value=value)
+    def select_date_of_birth_dropdown_list_date(self, value: str):
+        return self.driver.select_option_with_value(selector=self.locator.DATE_OF_BIRTH_DROPDOWN_DAYS, value=value)
+
+    def select_date_of_birth_dropdown_list_month(self, value: str):
+        return self.driver.select_option_with_value(selector=self.locator.DATE_OF_BIRTH_DROPDOWN_MONTHS, value=value)

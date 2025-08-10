@@ -11,7 +11,7 @@ from page.signup_page.page import SignupPage
 class TestCase:
 
     def setup_method(self):
-        self.driver = PlaywrightDriver(headless=False)
+        self.driver = PlaywrightDriver(headless=True)
         self.home = HomePage(driver=self.driver)
         self.login = LoginPage(driver=self.driver)
         self.signup = SignupPage(driver=self.driver)
@@ -29,7 +29,9 @@ class TestCase:
         sign_up_email = f'{current_time.strftime("%Y%m%d%H%M%S")}@automation.com'
         expected_enter_account_info_text = 'ENTER ACCOUNT INFORMATION'
         password = '1234567890'
-        date_birth = '10'
+        birth_date = '10'
+        birth_month = 'May'
+        birth_year = '1990'
         address = '24th Floor, Dr. S.P.M. Civic Centre, Minto Road, New Delhi, India.'
         state = 'Minto Road'
         city = 'New Delhi'
@@ -71,5 +73,6 @@ class TestCase:
         # region __Step8. Fill details: Title, Name, Email, Password, Date of birth
         self.signup.click_title_gender_radio()
         self.signup.fill_password(value=password)
-        self.signup.select_date_of_birth_dropdown_list(value=date_birth)
+        self.signup.select_date_of_birth_dropdown_list_date(value=birth_date)
+        self.signup.select_date_of_birth_dropdown_list_month(value=birth_month)
         # endregion __Step8. Fill details: Title, Name, Email, Password, Date of birth
