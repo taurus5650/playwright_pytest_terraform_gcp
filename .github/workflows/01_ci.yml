@@ -1,11 +1,23 @@
 name: ci-workflow
 
 on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - 'deployment/terraform/**'
+      - '.github/workflows/00_infra.yml'
+
+  pull_request:
+    paths-ignore:
+      - 'deployment/terraform/**'
+      - '.github/workflows/00_infra.yml'
+
   workflow_run:
     workflows: ['infra-workflow']
     types:
       - completed
-    workflow_dispatch: {}
+
+  workflow_dispatch: {}
 
 jobs:
   check:
