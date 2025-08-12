@@ -3,7 +3,9 @@ name: infra-workflow
 on:
   push:
     branches: [master]
-    paths: ['deployment/terraform/**']
+    paths:
+    - 'deployment/terraform/**'
+    - '.github/workflows/00_infra.yml'
   workflow_dispatch: {}
 
 concurrency:
