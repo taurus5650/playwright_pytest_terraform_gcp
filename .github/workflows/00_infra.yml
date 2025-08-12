@@ -1,4 +1,4 @@
-name: iac-workflow
+name: infra-workflow
 
 on:
   push:
@@ -7,11 +7,11 @@ on:
   workflow_dispatch: {}
 
 concurrency:
-  group: iac-${{ github.ref }}
+  group: infra-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  infra-setting:
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'

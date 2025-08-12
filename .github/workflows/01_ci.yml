@@ -1,6 +1,10 @@
 name: ci-workflow
 
 on:
+  workflow_run:
+    workflows: [ 'infra-workflow' ]
+    types:
+      - completed
   pull_request:
     paths-ignore: ['deployment/terraform/**']
   push:
