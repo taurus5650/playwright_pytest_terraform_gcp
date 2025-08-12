@@ -47,7 +47,7 @@
 │   └── terraform
 ├── flask_app
 │   └── trigger_automation.py
-├── infra
+├── base
 │   ├── api_request.py
 │   ├── config.py
 │   ├── mongo_database.py

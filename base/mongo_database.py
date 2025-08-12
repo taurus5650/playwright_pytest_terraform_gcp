@@ -6,7 +6,7 @@ from typing import Any
 import certifi
 import pymongo
 from bson import json_util
-from infra.config import get_env_config
+from base.config import get_env_config
 from pymongo import errors
 
 from utils.logger import logger

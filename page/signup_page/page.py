@@ -1,5 +1,5 @@
 from page.signup_page.locator import Locator
-from infra.playwright_driver import PlaywrightDriver
+from base.playwright_driver import PlaywrightDriver
 
 
 class SignupPage:

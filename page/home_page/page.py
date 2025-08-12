@@ -1,5 +1,5 @@
-from infra.config import get_env_config
-from infra.playwright_driver import PlaywrightDriver
+from base.config import get_env_config
+from base.playwright_driver import PlaywrightDriver
 from page.home_page.locator import Locator
 
 

@@ -46,11 +46,6 @@ run-terraform-validate:
 run-terraform-fmt:
 	cd $(TF_DIR) && terraform fmt -recursive
 
-run-docker-push-to-artifact-registry:
-	gcloud auth configure-docker $(ASIA_PKG)
-	docker build --platform=linux/amd64 -f $(DEPLOYMENT)$(DOCKER_FILE) -t $(IMAGE_URI) .
-	docker push $(IMAGE_URI)
-
 run-terraform-import-all: # Telling GCP that Terraform will handle these GCP resources ; Accept error and keep running github action
 	cd $(TF_DIR) && terraform import \
 		google_artifact_registry_repository.docker_repo asia-east1/$(TF_REPO) || true
@@ -84,3 +79,17 @@ check-gcp-log:
 	  --limit=1000 \
 	  --format="value(textPayload)"
 
+
+ run-docker-push-to-artifact-registry:
+	gcloud auth configure-docker $(ASIA_PKG)
+	docker build --platform=linux/amd64 -f $(DEPLOYMENT)$(DOCKER_FILE) -t $(IMAGE_URI) .
+	docker push $(IMAGE_URI)
+
+run-deploy-to-cloud-run:
+	gcloud run deploy $(CLOUDRUN_SERVICE) \
+	  --image $(IMAGE_URI) \
+	  --region $(REGION) \
+	  --platform managed \
+	  --project $(GCP_PROJECT_ID) \
+	  --allow-unauthenticated \
+	  --quiet

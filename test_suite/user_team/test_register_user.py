@@ -2,7 +2,7 @@ from datetime import datetime
 
 import allure
 
-from infra.playwright_driver import PlaywrightDriver
+from base.playwright_driver import PlaywrightDriver
 from page.home_page.page import HomePage
 from page.login_page.page import LoginPage
 from page.signup_page.page import SignupPage
