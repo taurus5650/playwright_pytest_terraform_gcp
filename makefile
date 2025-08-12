@@ -80,7 +80,6 @@ check-gcp-log:
 	  --limit=1000 \
 	  --format="value(textPayload)"
 
-
  run-docker-push-to-artifact-registry:
 	gcloud auth configure-docker $(ASIA_PKG)
 	docker build --platform=linux/amd64 -f $(DEPLOYMENT)$(DOCKER_FILE) -t $(IMAGE_URI) .

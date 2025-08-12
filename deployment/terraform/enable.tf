@@ -5,7 +5,7 @@ resource "google_project_service" "artifact_registry" {
 }
 
 resource "google_project_service" "cloud_run" {
-  project            = var.project_id
+  project            = var.123
   service            = "run.googleapis.com"
   disable_on_destroy = false
 }
