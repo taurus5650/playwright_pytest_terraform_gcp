@@ -1,7 +1,7 @@
 import mongomock
 from configparser import ConfigParser
-from infra.mongo_database import PyMongoDB
-from infra.config import get_env_config
+from base.mongo_database import PyMongoDB
+from base.config import get_env_config
 
 
 class MockedPyMongoDB(PyMongoDB):
