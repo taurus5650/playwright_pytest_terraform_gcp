@@ -2,7 +2,7 @@ name: cd-workflow
 
 on:
   workflow_run:
-    workflows: ['01_ci']
+    workflows: ['ci-workflow']
     types:
       - completed
   workflow_dispatch: {}
