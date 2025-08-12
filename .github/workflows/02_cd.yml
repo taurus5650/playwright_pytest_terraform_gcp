@@ -25,4 +25,4 @@ jobs:
       - name: build-and-push-docker-image-to-artifact-registry
         run: make run-docker-push-to-artifact-registry
       - name: deploy-to-cloud-run
-        run: maek run-deploy-to-cloud-run
+        run: make run-deploy-to-cloud-run
